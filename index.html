@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#c5a972">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="نان خشکه">
+<title>سیستم مدیریت نان خشکه</title>
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+<script>function applyPrefs(d){var t=d.theme||'auto';if(t==='auto')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';var e=document.documentElement;e.dataset.theme=t;e.style.setProperty('--z',({1:1,2:1.15,3:1.3})[d.fs]||1);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==='dark'?'#16130e':'#c5a972'}
+try{var __d=JSON.parse(localStorage.getItem('nk2')||'{}');applyPrefs(__d);if(__d.pin)document.documentElement.dataset.lock=1}catch(e){applyPrefs({})}</script>
+<style>
+:root{--g:#c5a972;--gd:#a68c5b;--bg:#f6f1e6;--p:#fffdf9;--m:#7d7d7d;--ok:#2e7d32;--bad:#d9534f;--t:#1a1a1a;--b:#e7e1d7;--w:#fff;--big:#fffef6;--bigb:#f2e9d1;--pb:#efe8d5}
+:root[data-theme=dark]{--bg:#16130e;--p:#211d15;--w:#2a251b;--t:#f1ebdd;--m:#aaa291;--b:#3a3326;--big:#2a251b;--bigb:#3a3326;--pb:#3a3326;--ok:#66bb6a;--bad:#ef6f6a;color-scheme:dark}
+:root[data-theme=dark] .alert{color:#e9c88a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+@font-face{font-family:VazirLocal;src:url(vazirmatn.woff2) format("woff2");font-weight:100 900;font-display:swap}
+html,body{margin:0;background:var(--bg);color:var(--t);font-family:VazirLocal,Vazirmatn,Tahoma,sans-serif;-webkit-text-size-adjust:100%}
+html{zoom:var(--z,1)}
+.wrap{max-width:1200px;margin:auto;padding:calc(10px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom))}
+header{display:flex;gap:12px;align-items:center;background:var(--w);border-radius:14px;padding:14px;box-shadow:0 6px 24px #0001}
+.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;font-weight:800;font-size:20px;display:grid;place-items:center;flex:none}
+h1{font-size:18px;margin:0}
+header input{border:0;border-bottom:1px dashed var(--b);font-size:14px;color:var(--m);background:none;padding:2px 0;text-align:right}
+.tools{display:flex;gap:8px;flex-wrap:wrap;padding:10px 2px}
+button{font:inherit;font-size:14px;cursor:pointer;border:1px solid var(--b);background:var(--w);color:var(--t);border-radius:10px;padding:10px 14px;white-space:nowrap;min-height:44px;touch-action:manipulation}
+button:active{opacity:.8}
+.pri{background:var(--g);color:#fff;border:0;font-weight:700}
+.del{background:var(--bad);color:#fff;border:0}
+.sbtn{min-height:34px;padding:4px 10px;font-size:12px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.grid>*{min-width:0}
+.card{background:var(--p);border-radius:16px;padding:16px;box-shadow:0 8px 28px #0000000f;margin-bottom:16px}
+h2{font-size:16px;margin:0 0 10px}h3{font-size:14px;margin:8px 0 0;color:var(--gd)}
+.f2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 10px}
+label{display:block;font-size:13px;font-weight:600;margin:8px 0 3px}
+input,select{width:100%;padding:10px;border:1px solid var(--b);border-radius:10px;font:inherit;font-size:16px;text-align:center;background:var(--w);color:var(--t)}
+input:focus,select:focus,button:focus-visible{outline:0;border-color:var(--g);box-shadow:0 0 0 3px #c5a97266}
+.row{display:flex;gap:8px;align-items:center;margin-top:8px}.row input{flex:1}
+.kpi{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14px;color:var(--m);font-weight:600}
+.kpi b{color:var(--ok);background:#2e7d3214;border-radius:6px;padding:3px 10px;font-size:17px}
+.neg{color:var(--bad)!important}
+.pb{height:16px;background:var(--pb);border-radius:8px;overflow:hidden;margin-top:6px}
+.pb i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--gd));width:0;transition:width .4s;color:#fff;font:700 11px/16px sans-serif;text-align:center;font-style:normal;min-width:2px}
+.big{text-align:center;background:var(--big);border:1px solid var(--bigb);border-radius:12px;padding:12px;margin:12px 0;font-size:13px;color:var(--m)}
+.big b{display:block;font-size:26px;color:var(--ok)}
+.sm{font-size:13px;color:var(--m);margin-top:6px;line-height:1.7}
+.alert{background:#c5a97226;color:#8a5e2f;border-radius:10px;padding:10px;font-weight:700;margin:8px 0;font-size:14px}
+canvas{width:100%;height:200px;display:block;margin-top:10px}
+.tw{overflow:auto;max-height:340px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px;border-bottom:1px solid var(--b);text-align:center;font-size:14px;white-space:nowrap}
+th{color:var(--m);font-weight:600}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 18px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9;font-size:14px}
+dialog{background:var(--p);color:var(--t);border:0;border-radius:14px;max-width:480px;width:calc(100% - 32px);padding:18px;text-align:right}
+dialog::backdrop{background:#0008}
+#rep{display:none}
+@media print{html,body{background:#fff!important;color:#000!important}body>.wrap,#toast,#lk{display:none!important}#rep{display:block;padding:20px}#rep table,#rep th,#rep td{border:1px solid #ccc}}
+html[data-lock="1"] .wrap{visibility:hidden}
+#lk{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:var(--bg)}
+#bk{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.mrow{border:1px solid var(--b);border-radius:12px;padding:10px;margin-bottom:10px}
+.mh{display:flex;gap:8px;align-items:center}.mh input{text-align:right;font-weight:700}.mh .sbtn{flex:none}
+.g3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 8px}.g3>div:first-child{grid-column:1/-1}
+.mrow label{font-size:12px;margin:6px 0 2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo" id="logo">س</div>
+  <div style="flex:1;min-width:0"><h1>سیستم مدیریت نان خشکه</h1><input id="brand" aria-label="نام برند" data-o="brand" placeholder="نام برند"></div>
+</header>
+<div class="tools">
+  <button onclick="exportAll()">🔁 پشتیبان</button>
+  <button onclick="$('rf').click()">📥 بازیابی</button>
+  <button onclick="csvOut()">⬇️ خروجی CSV</button>
+  <button onclick="$('cf').click()">⬆️ ورود CSV</button>
+  <button onclick="report('w')">🖨 گزارش هفتگی</button>
+  <button onclick="report()">🖨 گزارش ماهانه</button>
+  <button onclick="$('hp').showModal()">❓ راهنما</button>
+</div>
+<div id="bk" class="alert" hidden><span>🔔 مدتی است پشتیبان نگرفته‌ای.</span><button class="sbtn pri" onclick="exportAll()">پشتیبان بگیر</button><button class="sbtn" onclick="bkLater()">بعداً</button></div>
+
+<div class="grid">
+<div>
+  <div class="card">
+    <h2>ورودی‌ها و تنظیمات</h2>
+    <div class="sm">هر تغییر خودکار ذخیره می‌شود. برای هر ماده نام، قیمت یک بسته (تومان)، وزن همان بسته (کیلو) و مقدار مصرف در هر خمیر (کیلو) را وارد کن؛ ماده‌ی جدید هم می‌توانی اضافه کنی.</div>
+    <h3>مواد اولیه</h3><div id="mats"></div><button class="pri" style="width:100%;margin:4px 0 8px" onclick="addMat()">➕ افزودن ماده</button>
+    <div class="f2"><div><h3>هزینه‌های ثابت</h3><div id="cc"></div></div><div><h3>تولید و فروش</h3><div id="cd"></div></div></div>
+    <div class="row"><button class="pri" onclick="snap(1)">ذخیره قیمت فعلی در تاریخچه</button></div>
+  </div>
+
+  <div class="card">
+    <h2>ثبت تولید روزانه</h2>
+    <div class="sm">تعداد بسته را وارد کن؛ تاریخ امروز خودکار ثبت می‌شود. ثبت دوباره در همان روز، به تعداد قبلی اضافه می‌شود.</div>
+    <div class="row"><input id="lc" aria-label="تعداد بسته امروز" inputmode="decimal" placeholder="تعداد بسته امروز"><button class="pri" onclick="saveToday()">ثبت امروز</button></div>
+    <div class="tw" style="margin-top:10px"><table><thead><tr><th>#</th><th>تاریخ</th><th>تعداد</th><th>سود روز</th><th></th></tr></thead><tbody id="lb"></tbody></table></div>
+    <div class="row"><button class="del sbtn" onclick="clearLogs()">🗑 پاک کردن همه رکوردها</button></div>
+  </div>
+
+  <div class="card">
+    <h2>تاریخچه قیمت مواد</h2>
+    <select id="phs" aria-label="انتخاب ماده" onchange="drawPh()"></select>
+    <div class="sm" id="phc"></div>
+    <canvas id="cPh" role="img" aria-label="نمودار تاریخچه قیمت"></canvas>
+  </div>
+</div>
+
+<div>
+  <div class="card">
+    <h2>داشبورد</h2>
+    <div class="kpi">قیمت تمام‌شده هر بسته<b id="kcpp">—</b></div>
+    <div class="kpi">قیمت تمام‌شده هر کیلو<b id="kckg">—</b></div>
+    <div class="kpi">سود هر بسته (میانگین)<b id="kpp">—</b></div>
+    <div class="sm">درصد سود نسبت به قیمت فروش میانگین</div>
+    <div class="pb"><i id="kbar">۰٪</i></div>
+    <div id="al" class="alert" hidden></div>
+    <div class="big">سود روزانه (با تعداد بسته برنامه‌ای)<b id="kday">—</b></div>
+
+    <label for="goal">هدف سود ماهانه (تومان)</label>
+    <input id="goal" data-o="goal" inputmode="decimal" placeholder="مثلاً ۱۸۰۰۰۰۰۰۰">
+    <div class="pb"><i id="gbar">۰٪</i></div>
+    <div class="sm" id="gst"></div>
+
+    <canvas id="cLine" role="img" aria-label="نمودار سود روزانه و پیش‌بینی"></canvas>
+    <canvas id="cPie" role="img" aria-label="نمودار سهم هزینه‌ها"></canvas>
+
+    <div class="sm" id="tr"></div>
+    <div class="sm" id="fc"></div>
+    <div class="sm" id="be"></div>
+    <div class="sm" id="im"></div>
+    <label for="fd">بازه پیش‌بینی (روز)</label>
+    <input id="fd" data-o="fd" inputmode="numeric">
+  </div>
+
+  <div class="card">
+    <h2>پیشنهاد قیمت و هشدار</h2>
+    <label for="thr">آستانه هشدار سود (٪)</label><input id="thr" data-o="thr" inputmode="decimal">
+    <label for="mg">حاشیه سود هدف (٪)</label><input id="mg" data-o="mg" inputmode="decimal">
+    <div class="row"><button class="pri" onclick="suggest()" style="flex:1">محاسبه قیمت پیشنهادی</button></div>
+    <div class="sm" id="sug">قیمت پیشنهادی (عمده / حضوری): —</div>
+    <label style="display:flex;gap:8px;align-items:center;font-weight:400"><input type="checkbox" id="voice" style="width:auto"> اعلام صوتی پس از ثبت تولید</label>
+  </div>
+  <div class="card"><h2>ظاهر، پشتیبان و ایمنی</h2>
+    <label for="theme">پوسته</label><select id="theme"><option value="auto">خودکار</option><option value="light">روشن</option><option value="dark">تیره</option></select>
+    <label for="fs">اندازه نوشته</label><select id="fs"><option value="1">معمولی</option><option value="2">بزرگ</option><option value="3">خیلی بزرگ</option></select>
+    <label for="bkd">یادآوری پشتیبان</label><select id="bkd"><option value="3">هر ۳ روز</option><option value="7">هر ۷ روز</option><option value="14">هر ۱۴ روز</option><option value="0">خاموش</option></select>
+    <div class="sm" id="bkst"></div>
+    <div class="row"><button class="pri" style="flex:1" onclick="pinOpen()">رمز قفل برنامه</button></div><div class="sm" id="pst"></div>
+  </div>
+</div>
+</div>
+</div>
+
+<div id="rep"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="cf" accept=".csv,text/csv" hidden>
+<input type="file" id="rf" accept=".json,application/json" hidden>
+<dialog id="pd"><h3 style="margin-top:0">رمز قفل برنامه</h3>
+<div id="pdkw"><label for="pdk">رمز فعلی</label><input id="pdk" type="password" inputmode="numeric" maxlength="8" autocomplete="off"></div>
+<label for="pdi">رمز جدید (۴ تا ۸ رقم)</label><input id="pdi" type="password" inputmode="numeric" maxlength="8" autocomplete="off">
+<label for="pdj">تکرار رمز جدید</label><input id="pdj" type="password" inputmode="numeric" maxlength="8" autocomplete="off">
+<div class="sm" id="pdm" style="color:var(--bad)"></div>
+<div class="sm">برای حذف رمز، فقط رمز فعلی را بزن و بخش جدید را خالی بگذار. این قفل فقط جلوی دید دیگران را می‌گیرد و جایگزین پشتیبان نیست.</div>
+<div class="row"><button class="pri" style="flex:1" onclick="pinSave()">ذخیره</button><button onclick="$('pd').close()">بستن</button></div></dialog>
+<div id="lk" hidden><div class="card" style="width:min(340px,90%);text-align:center"><div class="logo" style="margin:0 auto 10px">س</div><h2>برنامه قفل است</h2><input id="lki" type="password" inputmode="numeric" maxlength="8" autocomplete="off" aria-label="رمز"><div class="sm" id="lkm"></div><div class="row"><button class="pri" style="flex:1" onclick="unlock()">باز کردن</button></div><div class="row"><button class="sbtn" style="flex:1" onclick="forgot()">رمز را فراموش کردم</button></div></div></div>
+<dialog id="hp">
+  <h3 style="margin-top:0">راهنما</h3>
+  <ul style="padding-right:18px;line-height:1.9;font-size:14px">
+    <li>اطلاعات فقط روی همین دستگاه و همین مرورگر ذخیره می‌شود. برای انتقال یا نگهداری، از «پشتیبان» استفاده کن.</li>
+    <li>«تعداد خمیر در روز» را اگر بیش از یک خمیر می‌زنی تغییر بده؛ هزینه مواد در آن ضرب می‌شود.</li>
+    <li>سود روز = تعداد × (قیمت میانگین − هزینه مواد هر بسته) − هزینه‌های ثابت روز.</li>
+    <li>پیش‌بینی با خط روند روی ۳۰ رکورد آخر انجام می‌شود و حداقل به ۵ رکورد نیاز دارد.</li>
+    <li>مواد اولیه را می‌توانی ویرایش، حذف یا اضافه کنی؛ وزن هر بسته را هم خودت می‌زنی.</li>
+    <li>گزارش‌ها با چاپ مرورگر ساخته می‌شوند؛ برای PDF گزینه‌ی Save as PDF را بزن.</li>
+    <li>آیفون: Safari ← Share ← Add to Home Screen. داده‌ی Safari و برنامه‌ی نصب‌شده از هم جداست؛ پیش از نصب پشتیبان بگیر و بعد از نصب «بازیابی» را بزن.</li>
+  </ul>
+  <button class="pri" onclick="$('hp').close()">بستن</button>
+</dialog>
+
+<script src="core.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const fm=n=>(Math.round(n)||0).toLocaleString('fa-IR'),f1=n=>(Math.round(n*10)/10||0).toLocaleString('fa-IR');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.style.opacity=1;clearTimeout(tt);tt=setTimeout(()=>t.style.opacity=0,2400)}
+
+/* تاریخ: ذخیره به‌صورت میلادی با ساعت محلی، نمایش شمسی */
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=()=>ymd(new Date());
+const pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+const FAC='fa-IR-u-ca-persian';
+const jd=s=>pd(s).toLocaleDateString(FAC);
+const sd=s=>pd(s).toLocaleDateString(FAC,{month:'numeric',day:'numeric'});
+const jm=s=>{const p=new Intl.DateTimeFormat('en-u-ca-persian',{year:'numeric',month:'numeric'}).formatToParts(pd(s));return p.find(x=>x.type==='year').value+'/'+p.find(x=>x.type==='month').value};
+const validDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s)&&today&&(d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')===s)(pd(s));
+
+/* داده‌ها */
+const F=[['labor','حقوق کارگر ماهانه',37e6,'cc'],['rent','کرایه ماهانه',0,'cc'],['util','انرژی و بسته‌بندی روزانه',1e5,'cc'],['pk','تعداد بسته در روز',45,'cd'],['wg','وزن هر بسته (گرم)',920,'cd'],['dough','تعداد خمیر در روز',1,'cd'],['ws','قیمت فروش عمده',18e4,'cd'],['rt','قیمت فروش حضوری',2e5,'cd'],['mix','سهم فروش عمده (٪)',50,'cd']];
+const KEY='nk2';
+let D={v:{},logs:[],ph:[],goal:0,brand:'مجتمع سنت',thr:20,mg:25,fd:7,voice:false,mig:0,theme:'auto',fs:1,bkd:7,lastBackup:0,bkSnooze:0,pin:'',salt:''};
+function load(){try{const r=localStorage.getItem(KEY);if(r)D=Object.assign(D,JSON.parse(r))}catch(e){}D.mat=buildMat(D.mat,D.v)}
+let wiping=0,st;const put=()=>{if(wiping)return;try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){toast('ذخیره‌سازی ممکن نیست. از حالت ناشناس خارج شو یا فضای مرورگر را خالی کن.')}};function save(){clearTimeout(st);st=setTimeout(put,250)}
+
+/* محاسبات (تابع خالص، بدون دست‌زدن به صفحه) */
+function getS(){const g=k=>num($('f_'+k).value);return{m:D.mat.map((_,i)=>({p:num($('p'+i).value),u:num($('u'+i).value),w:num($('w'+i).value)||1})),labor:g('labor'),rent:g('rent'),util:g('util'),pk:g('pk')||1,wg:g('wg')||900,dough:g('dough')||1,ws:g('ws'),rt:g('rt'),mix:Math.min(100,Math.max(0,g('mix')))/100}}
+function fcast(){const L=D.logs.slice(-30);if(L.length<5)return null;const t0=pd(L[0].date),X=l=>Math.round((pd(l.date)-t0)/864e5),r=reg(L.map(l=>[X(l),l.profit])),lx=X(L[L.length-1]),n=Math.max(1,Math.min(60,Math.round(D.fd)||7)),out=[],lab=[];
+for(let i=1;i<=n;i++){out.push(Math.round(r.a+r.b*(lx+i)));const d=pd(L[L.length-1].date);d.setDate(d.getDate()+i);lab.push(d.toLocaleDateString(FAC,{month:'numeric',day:'numeric'}))}
+return{out,lab,r2:r.r2,slope:r.b,my:r.my}}
+
+/* نمودارها (بدون وابستگی خارجی) */
+const cv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function setup(c){const r=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;c.width=w*r;c.height=h*r;const x=c.getContext('2d');x.setTransform(r,0,0,r,0,0);x.clearRect(0,0,w,h);x.font='11px VazirLocal,Vazirmatn,Tahoma,sans-serif';return[x,w,h]}
+function empty(x,w,h){x.fillStyle='#999';x.textAlign='center';x.fillText('هنوز داده‌ای برای نمایش نیست',w/2,h/2)}
+function line(id,labels,series){const[x,w,h]=setup($(id)),all=series.flatMap(s=>s.d).filter(v=>v!=null);if(!all.length)return empty(x,w,h);
+let lo=Math.min(0,...all),hi=Math.max(0,...all);if(hi===lo)hi=lo+1;const L=78,R=10,T=14,B=22,pw=w-L-R,ph=h-T-B,n=labels.length,X=i=>L+(n<2?pw/2:i*pw/(n-1)),Y=v=>T+ph*(1-(v-lo)/(hi-lo));
+x.textAlign='right';x.fillStyle='#888';x.strokeStyle=cv('--b');x.lineWidth=1;
+for(let k=0;k<=4;k++){const v=lo+(hi-lo)*k/4,y=Y(v);x.beginPath();x.moveTo(L,y);x.lineTo(w-R,y);x.stroke();x.fillText(v.toLocaleString('fa-IR',{notation:'compact',maximumFractionDigits:1}),L-6,y+4)}
+if(lo<0){x.strokeStyle='#bbb';x.beginPath();x.moveTo(L,Y(0));x.lineTo(w-R,Y(0));x.stroke()}
+x.textAlign='center';[0,Math.floor((n-1)/2),n-1].filter((v,i,a)=>a.indexOf(v)===i&&n>0).forEach(i=>x.fillText(labels[i],Math.min(w-22,Math.max(L+10,X(i))),h-6));
+series.forEach(s=>{x.strokeStyle=s.c;x.lineWidth=2.2;x.setLineDash(s.dash||[]);let open=false;x.beginPath();s.d.forEach((v,i)=>{if(v==null){open=false;return}open?x.lineTo(X(i),Y(v)):x.moveTo(X(i),Y(v));open=true});x.stroke();x.setLineDash([]);
+if(s.fill){x.fillStyle=s.fill;const a=s.d.findIndex(v=>v!=null),z=s.d.length-1-[...s.d].reverse().findIndex(v=>v!=null);x.lineTo(X(z),Y(0));x.lineTo(X(a),Y(0));x.closePath();x.fill()}
+if(n<=45){x.fillStyle=s.c;s.d.forEach((v,i)=>{if(v!=null&&!s.nodots){x.beginPath();x.arc(X(i),Y(v),2.6,0,7);x.fill()}})}})}
+function pie(id,items){const[x,w,h]=setup($(id)),tot=items.reduce((a,i)=>a+Math.max(0,i.v),0);if(!tot)return empty(x,w,h);
+const r=Math.min(h/2-8,w*.24),cx=r+10,cy=h/2;let a=-Math.PI/2;items.forEach(i=>{const s=Math.max(0,i.v)/tot*Math.PI*2;x.fillStyle=i.c;x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,r,a,a+s);x.fill();a+=s});
+x.fillStyle=cv('--p');x.beginPath();x.arc(cx,cy,r*.55,0,7);x.fill();
+x.textAlign='right';x.direction='rtl';items.forEach((i,k)=>{const y=h/2-(items.length-1)*13+k*26;x.fillStyle=i.c;x.fillRect(w-18,y-9,12,12);x.fillStyle=cv('--t');x.fillText(i.l+' — '+Math.round(Math.max(0,i.v)/tot*100).toLocaleString('fa-IR')+'٪',w-24,y+1)});x.direction='ltr'}
+
+/* نمایش داشبورد */
+let cache={};
+function render(){try{mcUpd()}catch(_){}
+ const S=getS(),C=cost(S),pp=C.avg-C.cpp,pct=C.avg>0?pp/C.avg*100:0,day=pp*S.pk;
+ const set=(id,v,neg)=>{const e=$(id);e.textContent=v;e.classList.toggle('neg',!!neg)};
+ set('kcpp',fm(C.cpp)+' تومان');set('kckg',fm(C.ckg)+' تومان');set('kpp',fm(pp)+' تومان',pp<0);set('kday',fm(day)+' تومان',day<0);
+ const pr=Math.round(pct*10)/10;$('kbar').style.width=Math.min(100,Math.max(0,pr))+'%';$('kbar').textContent=pr.toLocaleString('fa-IR')+'٪';$('kbar').style.color=pr<14?'transparent':'#fff';
+ const al=$('al');if(C.avg>0&&pr<D.thr){al.hidden=false;al.textContent=`⚠️ حاشیه سود (${pr.toLocaleString('fa-IR')}٪) کمتر از آستانه (${f1(D.thr)}٪) است. هزینه‌ها یا قیمت فروش را بررسی کن.`}else al.hidden=true;
+ cache.pie=[{l:'مواد اولیه',v:C.mat,c:'#d4a056'},{l:'حقوق',v:C.labor,c:'#8a5e2f'},{l:'کرایه',v:C.rent,c:'#c5a972'},{l:'انرژی و بسته‌بندی',v:C.util,c:'#eed8b1'}];
+ /* سر به سر */
+ const mu=C.avg-C.vpp;$('be').textContent=mu>0?`نقطه سر به سر ≈ ${fm(Math.ceil(C.fixed/mu))} بسته در روز (سود هر بسته قبل از هزینه ثابت: ${fm(mu)} تومان)`:'نقطه سر به سر: قیمت فروش از هزینه مواد هر بسته کمتر است.';
+ /* تاثیر ۵٪ افزایش قیمت */
+ const imp=S.m.map((x,i)=>{if(!x.p||!x.u)return null;const S2=JSON.parse(JSON.stringify(S));S2.m[i].p*=1.05;return{n:D.mat[i].n||('ماده '+(i+1)),d:(cost(S2).cpp-C.cpp)/C.cpp*100}}).filter(Boolean).sort((a,b)=>b.d-a.d).slice(0,3);
+ $('im').textContent='اثر ۵٪ افزایش قیمت بر هزینه هر بسته: '+(imp.map(i=>`${i.n} ${(Math.round(i.d*100)/100).toLocaleString('fa-IR')}٪`).join(' — ')||'—');
+ /* هدف ماهانه */
+ const mk=jm(today()),ms=D.logs.filter(l=>jm(l.date)===mk).reduce((a,l)=>a+l.profit,0),gp=D.goal>0?Math.min(100,Math.max(0,Math.round(ms/D.goal*100))):0;
+ $('gbar').style.width=gp+'%';$('gbar').textContent=gp.toLocaleString('fa-IR')+'٪';$('gbar').style.color=gp<14?'transparent':'#fff';
+ $('gst').textContent=D.goal>0?`تا امروز در این ماه ${fm(ms)} تومان — ${gp.toLocaleString('fa-IR')}٪ از هدف`:'هدف ماهانه تنظیم نشده.';
+ /* روند و پیش‌بینی */
+ const f=fcast();cache.f=f;
+ if(f){const rel=f.my?f.slope*7/Math.abs(f.my):0;$('tr').textContent='روند سود: '+(rel>.05?'📈 در حال رشد':rel<-.05?'📉 در حال کاهش':'⚖️ تقریباً ثابت');
+  $('fc').textContent=`پیش‌بینی ${fm(f.out.length)} روز آینده (با فرض تولید همه روزها): مجموع ≈ ${fm(f.out.reduce((a,b)=>a+b,0))} تومان — برازش مدل ${fm(f.r2*100)}٪`}
+ else{$('tr').textContent='روند سود: حداقل ۵ رکورد لازم است.';$('fc').textContent='پیش‌بینی: —'}
+ drawAll()}
+function drawAll(){
+ const R=D.logs.slice(-60),f=cache.f,lab=R.map(l=>sd(l.date)),real=R.map(l=>l.profit),ser=[{d:real,c:'#43a047',fill:'#43a04722'}];
+ if(f&&R.length){const L=Math.min(R.length,60);ser[0].d=real.concat(f.out.map(()=>null));ser.push({d:real.map((_,i)=>i===real.length-1?real[i]:null).concat(f.out),c:'#c5a972',dash:[7,5],nodots:1});lab.push(...f.lab)}
+ line('cLine',lab,ser);pie('cPie',cache.pie||[]);drawPh()}
+function drawPh(){const i=+$('phs').value||0;line('cPh',D.ph.map(e=>new Date(e.t).toLocaleDateString(FAC,{month:'numeric',day:'numeric'})),[{d:D.ph.map(e=>e.p[i]),c:'#a68c5b'}]);$('phc').textContent=fm(D.ph.length)+' رکورد ثبت شده'}
+
+/* رکوردهای تولید */
+function renderLogs(){$('lb').innerHTML=D.logs.slice().reverse().map((l,i)=>`<tr><td>${fm(D.logs.length-i)}</td><td>${esc(jd(l.date))}</td><td>${fm(l.count)}</td><td class="${l.profit<0?'neg':''}">${fm(l.profit)}</td><td><button class="sbtn" data-a="e" data-d="${esc(l.date)}">ویرایش</button> <button class="sbtn del" data-a="d" data-d="${esc(l.date)}">حذف</button></td></tr>`).join('')||'<tr><td colspan="5" class="sm">هنوز رکوردی ثبت نشده. تعداد بسته امروز را وارد کن.</td></tr>'}
+function changed(){D.logs.sort((a,b)=>a.date<b.date?-1:1);save();renderLogs();render();bkCheck()}
+function saveToday(){const c=num($('lc').value);if(c<=0)return toast('تعداد بسته را بیشتر از صفر وارد کن.');const C=cost(getS()),d=today();let r=D.logs.find(l=>l.date===d);if(r)r.count+=c;else D.logs.push(r={date:d,count:c});r.k=ksnap(C);r.profit=kprofit(r.k,r.count);$('lc').value='';changed();toast('ثبت شد: '+fm(c)+' بسته');
+ if(D.voice&&window.speechSynthesis){try{const u=new SpeechSynthesisUtterance(`ثبت شد. سود امروز ${fm(r.profit)} تومان.`);u.lang='fa-IR';speechSynthesis.speak(u)}catch(e){}}}
+$('lb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const r=D.logs.find(l=>l.date===b.dataset.d);if(!r)return;
+ if(b.dataset.a==='d'){if(confirm('این رکورد حذف شود؟')){D.logs=D.logs.filter(l=>l!==r);changed()}}
+ else{const v=prompt(`تعداد بسته برای ${jd(r.date)}:`,r.count);if(v===null||v.trim()==='')return;const c=num(v);if(c<0||!/\d/.test(norm(v)))return toast('عدد معتبر وارد کن.');r.count=c;r.k=r.k||ksnap(cost(getS()));r.profit=kprofit(r.k,c);changed()}});
+function clearLogs(){if(D.logs.length&&confirm('همه رکوردهای تولید پاک شود؟ این کار برگشت‌پذیر نیست. بهتر است اول پشتیبان بگیری.')){D.logs=[];changed()}}
+
+/* تاریخچه قیمت */
+let sn;const snapLater=()=>{clearTimeout(sn);sn=setTimeout(snap,1200)};
+function snap(force){clearTimeout(sn);const p=D.mat.map((_,i)=>num($('p'+i).value)),l=D.ph[D.ph.length-1];if(!force&&l&&l.p.length===p.length&&l.p.every((v,i)=>v===p[i]))return;D.ph.push({t:new Date().toISOString(),p});if(D.ph.length>400)D.ph.splice(0,D.ph.length-400);save();drawPh();if(force)toast('قیمت‌های فعلی ثبت شد.')}
+
+/* پیشنهاد قیمت */
+function suggest(){const S=getS(),C=cost(S),m=Math.min(90,Math.max(0,D.mg))/100,need=C.cpp/(1-m),P=Math.ceil(need/(S.mix+(1-S.mix)*1.1)/1000)*1000,R=Math.ceil(P*1.1/1000)*1000;
+ $('sug').innerHTML=`قیمت پیشنهادی (عمده / حضوری): <b>${fm(P)} / ${fm(R)} تومان</b><br>با همین مقدار و سهم فروش فعلی، حاشیه سود حدود ${f1(D.mg)}٪ می‌شود.`}
+
+/* پشتیبان، CSV، بازیابی */
+function dl(name,text,type){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([text],{type}));a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
+async function exportAll(){const name='nk_backup_'+today()+'.json',txt=JSON.stringify(D,(k,v)=>k==='pin'||k==='salt'?undefined:v,1);try{const f=new File([txt],name,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:name});else dl(name,txt,'application/json')}catch(e){if(e&&e.name==='AbortError')return;dl(name,txt,'application/json')}D.lastBackup=Date.now();save();bkCheck();toast('پشتیبان آماده شد.')}
+function csvOut(){if(!D.logs.length)return toast('رکوردی برای خروجی نیست.');dl('nk_logs_'+today()+'.csv','\ufeffتاریخ,تعداد,سود,تاریخ شمسی\n'+D.logs.map(l=>`${l.date},${l.count},${l.profit},${jd(l.date)}`).join('\n'),'text/csv;charset=utf-8')}
+function mergeLogs(a){let n=0;(a||[]).forEach(l=>{if(!l||!validDate(l.date))return;const c=num(l.count);if(c<0)return;const kk=l.k&&isFinite(l.k.a)&&isFinite(l.k.v)&&isFinite(l.k.f)?{k:{a:+l.k.a,v:+l.k.v,f:+l.k.f}}:{},o=Object.assign({date:l.date,count:c,profit:Math.round(num(l.profit))},kk),i=D.logs.findIndex(x=>x.date===o.date);i>=0?D.logs[i]=o:D.logs.push(o);n++});return n}
+$('cf').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const cur=cost(getS()),rows=[];String(r.result).replace(/^\ufeff/,'').split(/\r?\n/).forEach(ln=>{ln=norm(ln);const m=ln.match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);if(!m)return;let y=+m[1],mo=+m[2],d=+m[3];if(y<1700)[y,mo,d]=j2g(y,mo,d);const c=ln.slice(m.index+m[0].length).split(/[,;\t]/).slice(1);if(c[0]==null||c[0].trim()==='')return;const cnt=num(c[0]);rows.push({date:y+'-'+String(mo).padStart(2,'0')+'-'+String(d).padStart(2,'0'),count:cnt,profit:c[1]==null||c[1].trim()===''?Math.round(cur.day(cnt)):num(c[1])})});const n=mergeLogs(rows);changed();toast(n?`${fm(n)} رکورد وارد شد.`:'رکورد معتبری در فایل پیدا نشد.')};r.readAsText(f,'utf-8');e.target.value=''};
+const OM={labor_month:'f_labor',rent_month:'f_rent',utilities_day:'f_util',packages_day:'f_pk',weight_gram:'f_wg',wholesale_price:'f_ws',retail_price:'f_rt'};
+function fromOld(o){(o.settings||[]).forEach(s=>{const k=s.key;let m;if(m=k.match(/^price(\d+)$/))D.v['p'+(m[1]-1)]=s.value;else if(m=k.match(/^use(\d+)$/))D.v['u'+(m[1]-1)]=s.value;else if(OM[k])D.v[OM[k]]=s.value;else if(k==='forecastDays')D.fd=num(s.value)||7;else if(k==='brandName'&&s.value)D.brand=s.value});mergeLogs(o.logs);
+ (o.priceHistory||[]).forEach(e=>{if(e&&e.prices)D.ph.push({t:e.t,p:MAT.map((_,i)=>num(e.prices['p'+(i+1)]))})});D.mat=buildMat(null,D.v)}
+$('rf').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!confirm('اطلاعات فعلی با پشتیبان جایگزین شود؟'))return;
+ if(o.v&&typeof o.v==='object'){D=Object.assign(D,{v:o.v,logs:[],ph:Array.isArray(o.ph)?o.ph.filter(x=>x&&Array.isArray(x.p)&&!isNaN(new Date(x.t))):[],goal:num(o.goal),brand:String(o.brand||D.brand),thr:o.thr==null?20:num(o.thr),mg:o.mg==null?25:num(o.mg),fd:num(o.fd)||7,voice:!!o.voice,mat:buildMat(o.mat,o.v)});mergeLogs(o.logs)}
+ else{D.logs=[];D.ph=[];fromOld(o)}
+ D.lastBackup=Date.now();save();fillUI();changed();toast('بازیابی انجام شد.')}catch(_){toast('فایل پشتیبان معتبر نیست.')}};r.readAsText(f);e.target.value=''};
+
+/* گزارش ماهانه (چاپ از همین صفحه، بدون پنجره جدید) */
+function report(k){const d=today(),w=k==='w',C=cost(getS());let L,t;if(w){const e=pd(d);e.setDate(e.getDate()-6);const a=ymd(e);L=D.logs.filter(l=>l.date>=a&&l.date<=d);t='هفت روز اخیر'}else{const mk=jm(d);L=D.logs.filter(l=>jm(l.date)===mk);t=pd(d).toLocaleDateString(FAC,{year:'numeric',month:'long'})}
+ const pk=L.reduce((a,l)=>a+l.count,0),pf=L.reduce((a,l)=>a+l.profit,0);
+ $('rep').innerHTML=`<h1>گزارش ${w?'هفتگی':'ماهانه'} — ${esc(D.brand)}</h1><p>بازه: ${esc(t)}</p><p>روزهای ثبت‌شده: ${fm(L.length)} | جمع بسته‌ها: ${fm(pk)} | سود کل: ${fm(pf)} تومان | میانگین سود روز: ${fm(L.length?pf/L.length:0)} تومان | هزینه هر بسته (تنظیمات فعلی): ${fm(C.cpp)} تومان</p><table><tr><th>تاریخ</th><th>تعداد</th><th>سود روز</th></tr>${L.map(l=>`<tr><td>${esc(jd(l.date))}</td><td>${fm(l.count)}</td><td>${fm(l.profit)}</td></tr>`).join('')}</table>`;window.print()}
+
+/* پشتیبان، قفل */
+function bkCheck(){$('bkst').textContent=D.lastBackup?'آخرین پشتیبان: '+new Date(D.lastBackup).toLocaleDateString(FAC):'هنوز پشتیبان نگرفته‌ای.';const n=Date.now();$('bk').hidden=!(D.logs.length&&D.bkd>0&&n-(D.lastBackup||0)>D.bkd*864e5&&n>(D.bkSnooze||0))}
+function bkLater(){D.bkSnooze=Date.now()+864e5;save();bkCheck()}
+const hasC=!!(window.crypto&&crypto.subtle),hx=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+async function hp(pin,salt){return hx(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+':'+pin)))}
+function pinStatus(){$('pst').textContent=D.pin?'قفل رمز فعال است. فقط حریم خصوصی ساده است و جایگزین پشتیبان نیست.':'قفل رمز غیرفعال است.'}
+function pinOpen(){if(!hasC)return toast('قفل رمز فقط روی https یا localhost کار می‌کند.');$('pdk').value=$('pdi').value=$('pdj').value='';$('pdkw').hidden=!D.pin;$('pdm').textContent='';$('pd').showModal()}
+async function pinSave(){const k=norm($('pdk').value).trim(),a=norm($('pdi').value).trim(),b=norm($('pdj').value).trim(),m=$('pdm');
+ if(D.pin&&await hp(k,D.salt)!==D.pin)return m.textContent='رمز فعلی درست نیست.';
+ if(!a){if(!D.pin)return m.textContent='رمز جدید را وارد کن.';D.pin='';D.salt='';save();$('pd').close();pinStatus();return toast('رمز حذف شد.')}
+ if(!/^\d{4,8}$/.test(a))return m.textContent='رمز باید ۴ تا ۸ رقم باشد.';
+ if(a!==b)return m.textContent='تکرار رمز یکسان نیست.';
+ D.salt=hx(crypto.getRandomValues(new Uint8Array(16)));D.pin=await hp(a,D.salt);save();$('pd').close();pinStatus();toast('رمز تنظیم شد.')}
+let tries=0,until=0,hiddenAt=0;
+function lock(){if(!D.pin)return;document.documentElement.dataset.lock=1;$('lk').hidden=false;$('lkm').textContent=hasC?'':'برای باز کردن رمز به https نیاز است. اگر رمز را فراموش کرده‌ای، دکمه‌ی پایین را بزن.';$('lki').value='';setTimeout(()=>$('lki').focus(),60)}
+async function unlock(){if(Date.now()<until)return $('lkm').textContent='کمی صبر کن و دوباره امتحان کن.';if(!hasC)return;const v=norm($('lki').value).trim();$('lki').value='';
+ if(await hp(v,D.salt)===D.pin){tries=0;delete document.documentElement.dataset.lock;$('lk').hidden=true;$('lkm').textContent='';drawAll()}
+ else if(++tries>=5){until=Date.now()+3e4;tries=0;$('lkm').textContent='۵ بار اشتباه؛ ۳۰ ثانیه صبر کن.'}else $('lkm').textContent='رمز اشتباه است.'}
+function forgot(){if(confirm('با این کار همه‌ی اطلاعات این دستگاه پاک می‌شود. فقط اگر پشتیبان داری ادامه بده.')&&confirm('مطمئنی؟ این کار برگشت‌پذیر نیست.')){wiping=1;try{localStorage.removeItem(KEY)}catch(_){}location.reload()}}
+$('lki').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)hiddenAt=Date.now();else if(D.pin&&hiddenAt&&Date.now()-hiddenAt>6e4)lock()});
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>{if((D.theme||'auto')==='auto'){applyPrefs(D);drawAll()}});
+
+/* راه‌اندازی */
+const MONEY=id=>/^(p\d+|f_(labor|rent|util|ws|rt)|goal)$/.test(id);
+const fmtIn=el=>{if(!MONEY(el.id)||el.value.trim()==='')return;const n=num(el.value);if(Math.abs(n)>=1000&&Number.isInteger(n))el.value=n.toLocaleString('en-US')};
+function renderMat(){const sel=$('phs').value;
+$('mats').innerHTML=D.mat.map((m,i)=>`<div class="mrow"><div class="mh"><input id="n${i}" data-m="n" data-i="${i}" aria-label="نام ماده" value="${esc(m.n)}"><button class="sbtn del" onclick="delMat(${i})" aria-label="حذف ماده">🗑</button></div><div class="g3"><div><label for="p${i}">قیمت یک بسته (تومان)</label><input id="p${i}" data-m="p" data-i="${i}" inputmode="decimal" value="${esc(m.p)}"></div><div><label for="w${i}">وزن بسته (کیلو)</label><input id="w${i}" data-m="w" data-i="${i}" inputmode="decimal" value="${esc(m.w)}"></div><div><label for="u${i}">مصرف هر خمیر (کیلو)</label><input id="u${i}" data-m="u" data-i="${i}" inputmode="decimal" value="${esc(m.u)}"></div></div><div class="sm" id="mc${i}"></div></div>`).join('')||'<div class="sm">ماده‌ای وجود ندارد. با دکمه‌ی زیر اضافه کن.</div>';
+$('phs').innerHTML=D.mat.map((m,i)=>`<option value="${i}">${esc(m.n)||'ماده '+(i+1)}</option>`).join('');$('phs').value=D.mat[+sel]?sel:'0';
+document.querySelectorAll('#mats input').forEach(fmtIn)}
+const updNames=()=>[...$('phs').options].forEach((o,i)=>{if(D.mat[i])o.textContent=D.mat[i].n||'ماده '+(i+1)});
+function mcUpd(){getS().m.forEach((x,i)=>{const e=$('mc'+i);if(e)e.textContent=x.p&&x.w?`هر کیلو: ${fm(x.p/x.w)} تومان | سهم در هر خمیر: ${fm(x.p/x.w*x.u)} تومان`:''})}
+function addMat(){D.mat.push({n:'ماده جدید',w:1,p:0,u:0});renderMat();save();render();snap(0);const e=$('n'+(D.mat.length-1));e.focus();e.select()}
+function delMat(i){if(!D.mat[i]||!confirm('«'+(D.mat[i].n||'این ماده')+'» حذف شود؟'))return;D.mat.splice(i,1);D.ph.forEach(e=>e.p.splice(i,1));renderMat();save();render();drawPh()}
+function fillUI(){
+ const v=(id,d)=>esc(D.v[id]??d),inp=(id,d)=>`<input id="${id}" data-k="1" inputmode="decimal" value="${v(id,d)}">`;
+ renderMat();
+ 
+ ['cc','cd'].forEach(g=>$(g).innerHTML=F.filter(f=>f[3]===g).map(f=>`<label for="f_${f[0]}">${f[1]}</label>${inp('f_'+f[0],f[2])}`).join(''));
+ 
+ $('brand').value=D.brand;$('logo').textContent=D.brand[0]||'س';document.title=D.brand+' — مدیریت نان خشکه';
+ ['goal','thr','mg','fd'].forEach(k=>$(k).value=D[k]||'');$('voice').checked=!!D.voice;$('theme').value=D.theme||'auto';$('fs').value=String(D.fs||1);$('bkd').value=String(D.bkd??7);pinStatus();bkCheck();document.querySelectorAll('input').forEach(fmtIn)}
+let rt;const sched=()=>{clearTimeout(rt);rt=setTimeout(render,120)};
+document.addEventListener('focusin',e=>{const t=e.target;if(t.tagName==='INPUT'&&MONEY(t.id)){t.value=t.value.replace(/[,٬،]/g,'');try{t.select()}catch(_){}}});
+document.addEventListener('focusout',e=>{const t=e.target;if(t.tagName!=='INPUT'||!MONEY(t.id))return;fmtIn(t);if(t.dataset.k)D.v[t.id]=t.value;else if(t.dataset.m&&D.mat[+t.dataset.i])D.mat[+t.dataset.i][t.dataset.m]=t.value;save()});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.k)D.v[t.id]=t.value;else if(t.dataset.m){const m=D.mat[+t.dataset.i];if(!m)return;m[t.dataset.m]=t.value}else if(t.dataset.o){const k=t.dataset.o;D[k]=k==='brand'?t.value:num(t.value);if(k==='brand'){$('logo').textContent=t.value[0]||'س'}}else return;save();sched()});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.m==='p')snapLater();if(t.dataset.m==='n')updNames();if(t.id==='voice'){D.voice=t.checked;save()}
+if(t.id==='theme'){D.theme=t.value;save();applyPrefs(D);drawAll()}
+if(t.id==='fs'){D.fs=+t.value;save();applyPrefs(D);setTimeout(drawAll,60)}
+if(t.id==='bkd'){D.bkd=+t.value;save();bkCheck()}});
+const flush=()=>{if(!D.mig)return;clearTimeout(sn);try{snap()}catch(_){}clearTimeout(st);put()};addEventListener('pagehide',flush);document.addEventListener('visibilitychange',()=>{if(document.hidden)flush()});
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(drawAll,200)});
+
+/* انتقال یک‌باره‌ی داده‌های نسخه قبل (IndexedDB و localStorage) */
+function migrate(cb){let done=0;const fin=()=>{if(!done){done=1;cb()}};
+ try{const lg=JSON.parse(localStorage.getItem('nk_logs_v1')||'[]');mergeLogs(lg);const b=localStorage.getItem('nk_brand');if(b)D.brand=b}catch(_){}
+ if(!window.indexedDB)return fin();
+ try{const rq=indexedDB.open('NanKhoshkehDB');rq.onupgradeneeded=e=>e.target.transaction.abort();rq.onerror=fin;rq.onblocked=fin;
+  rq.onsuccess=e=>{const db=e.target.result,N=['settings','logs','priceHistory'];try{if(!N.every(n=>db.objectStoreNames.contains(n))){db.close();return fin()}
+   const tx=db.transaction(N,'readonly'),o={};N.forEach(n=>{tx.objectStore(n).getAll().onsuccess=ev=>o[n]=ev.target.result});
+   tx.oncomplete=()=>{db.close();try{if(!done)fromOld({settings:o.settings,logs:o.logs,priceHistory:o.priceHistory})}catch(_){}fin()};tx.onerror=()=>{db.close();fin()}}catch(_){fin()}}}catch(_){fin()}
+ setTimeout(fin,4000)}
+
+function start(){D.mig=1;fillUI();if(!D.ph.length)snap(0);renderLogs();render();save();applyPrefs(D);lock();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(_){}try{document.fonts&&document.fonts.ready.then(drawAll)}catch(_){}}
+load();
+if(D.mig)start();else migrate(start);
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
